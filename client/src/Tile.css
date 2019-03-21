@@ -1,0 +1,12 @@
+.grid-item {
+  background-color: #aaaaaa;
+  border: 1px solid #cccccc;
+  border-radius: 15px;
+  padding: 3%;
+}
+.grid-item img {
+  display: block;
+  width: 50%;
+  height: auto;
+  margin: auto;
+}

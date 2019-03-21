@@ -1,0 +1,8 @@
+.grid-container {
+  border: 2px solid #cccccc;
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  grid-gap: 10px;
+  border-radius: 15px;
+  padding: 1%;
+}

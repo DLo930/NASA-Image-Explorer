@@ -120,18 +120,6 @@
   -webkit-animation: pulse .5s;
   animation: pulse .5s;
 }
-.grid-container {
-  display: grid;
-  grid-template-columns: auto auto auto auto;
-  border: 2px solid #cccccc;
-  border-radius: 15px;
-  padding: 2%;
-}
-.grid-item {
-  border: 2px solid #cccccc;
-  border-radius: 10px;
-  padding: 2%;
-}
 
 .fade-enter {
   opacity: 0.01;

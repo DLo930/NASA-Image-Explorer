@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import VisitedText from './VisitedText';
+import TileGrid from './TileGrid';
 import './App.css';
 import './css_lib/animate.min.css';
 import img from './images/nasa_logo.png';
-//include TileGrid
 
 class App extends Component {
   constructor(props) {
@@ -31,7 +31,7 @@ class App extends Component {
   }
 
   handleChange(event) {
-    this.setState({ name: event.target.value });
+    this.setState({ [event.target.name]: event.target.value });
   }
 
   // request to server to validate info in MongoDB
@@ -55,7 +55,7 @@ class App extends Component {
         body: JSON.stringify(form)
       })
         .then(res => res.json())
-        .then(res => this.setState({ data: JSON.parse(res) }));
+        .then(res => this.setState({ data: JSON.parse(res).collection }));
     } else {
       alert("Make sure the years are valid!");
     }
@@ -88,7 +88,7 @@ class App extends Component {
           <section id="basic">
             <div>
               <label>Search terms:</label>
-              <input type="text" value={this.state.q} onChange={this.handleChange} size="18" />
+              <input type="text" onChange={this.handleChange} size="18" />
             </div>
             <div>
               <label><font color="red">*</font>Start year:</label>
@@ -112,27 +112,27 @@ class App extends Component {
                 <section id="advanced">
                   <div>
                     <label>Image title:</label><br />
-                    <input type="text" value={this.state.title} onChange={this.handleChange} size="15" />
+                    <input type="text" onChange={this.handleChange} size="15" />
                   </div>
                   <div>
                     <label>Image location:</label><br />
-                    <input type="text" value={this.state.location} onChange={this.handleChange} size="15" />
+                    <input type="text" onChange={this.handleChange} size="15" />
                   </div>
                   <div>
                     <label>Center:</label><br />
-                    <input type="text" value={this.state.center} onChange={this.handleChange} size="15" />
+                    <input type="text" onChange={this.handleChange} size="15" />
                   </div>
                   <div>
                     <label>NASA ID:</label><br />
-                    <input type="text" value={this.state.nasa_id} onChange={this.handleChange} size="15" />
+                    <input type="text" onChange={this.handleChange} size="15" />
                   </div>
                   <div>
                     <label>Primary photographer:</label><br />
-                    <input type="text" value={this.state.photographer} onChange={this.handleChange} size="15" />
+                    <input type="text" onChange={this.handleChange} size="15" />
                   </div>
                   <div>
                     <label>Secondary photographer:</label><br />
-                    <input type="text" value={this.state.secondary_creator} onChange={this.handleChange} size="15" />
+                    <input type="text" onChange={this.handleChange} size="15" />
                   </div>
                 </section>
               }
