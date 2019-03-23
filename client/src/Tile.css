@@ -1,12 +1,27 @@
 .grid-item {
+  height: 25vh;
+  width: 35vh;
   background-color: #aaaaaa;
-  border: 1px solid #cccccc;
-  border-radius: 15px;
-  padding: 3%;
+  border: 2px solid #cccccc;
+  border-radius: 25px;
+  padding: 0px 10px 10px 10px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.grid-item:hover {
+  background-color: black;
+  border-color: white;
+  text-decoration: underline;
+  -webkit-transition: background-color .35s;
+  transition: background-color .35s;
+  cursor: pointer;
+}
+.grid-item h4 {
+  text-align: center;
 }
 .grid-item img {
   display: block;
-  width: 50%;
-  height: auto;
+  height: 15vh;
+  width: auto;
   margin: auto;
 }

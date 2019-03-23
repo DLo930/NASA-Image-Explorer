@@ -32,9 +32,6 @@
   height: auto;
   float: left;
 }
-#top #visited {
-  float: right;
-}
 #top form {
   width: 65%;
   margin: 0px auto 30px auto;
@@ -134,4 +131,36 @@
 .fade-leave.fade-leave-active {
   opacity: 0.01;
   transition: opacity 300ms ease-in;
+}
+.results #showing {
+  display: inline-block;
+  margin: 1vh;
+}
+.buttons {
+  display: inline-block;
+  text-align: center;
+  margin-bottom: 3vh;
+}
+.buttons button {
+  font-family: "Titillium Web", sans-serif;
+  font-size: 17px;
+  background-color: black;
+  color: #eeeeee;
+  padding: 0px 5px 5px 5px;
+  border: 2px solid #eeeeee;
+  border-radius: 10px;
+  margin-left: 5px;
+  cursor: pointer;
+}
+.buttons button:hover {
+  background-color: #0b3d91;
+  color: #fc3d21;
+  -webkit-transition: background-color .35s, color .35s;
+  transition: background-color .35s, color .35s;
+}
+input:focus {
+  outline: 0;
+}
+button:focus {
+  outline: 0;
 }

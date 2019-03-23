@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import VisitedText from './VisitedText';
 import TileGrid from './TileGrid';
+//import LogInBtn from './LogInBtn';
+//import SignedInBtn from './SignedInBtn';
 import './App.css';
 import './css_lib/animate.min.css';
 import img from './images/nasa_logo.png';
@@ -12,26 +14,41 @@ class App extends Component {
     this.state = {
       // JSON object returned from query to NASA image API
       data: {},
+      // Number of returned items
+      no_pages: -1,
+      // Current page number
+      page: 1,
       // Visibility of advanced search fields
       isVisible: false,
+      // Login information -- EDIT?
+      user_id: "",
+      password: "",
       // Form data
-      q: "",
-      center: "",
-      location: "",
-      nasa_id: "",
-      photographer: "",
-      secondary_creator: "",
-      title: "",
-      year_start: new Date().getFullYear(),
-      year_end: new Date().getFullYear()
+      form: {
+        q: "",
+        center: "",
+        location: "",
+        nasa_id: "",
+        photographer: "",
+        secondary_creator: "",
+        title: "",
+        year_start: new Date().getFullYear(),
+        year_end: new Date().getFullYear()
+      }
     };
     this.handleChange = this.handleChange.bind(this);
+    this.updateData = this.updateData.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handlePrevPage = this.handlePrevPage.bind(this);
+    this.handleNextPage = this.handleNextPage.bind(this);
     this.toggleAdvanced = this.toggleAdvanced.bind(this);
+    this.myRef = React.createRef();
   }
 
   handleChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
+    var form = JSON.parse(JSON.stringify(this.state.form));
+    form[event.target.name] = event.target.value;
+    this.setState({ form: form });
   }
 
   // request to server to validate info in MongoDB
@@ -39,25 +56,58 @@ class App extends Component {
 
   }
 
+  handleLogout(event) {
+
+  }
+
+  updateData(obj=this.state.form) {
+    fetch("/handleForm", {
+      method: "POST",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(obj)
+    })
+      .then(res => res.json())
+      .then(res => {
+        const json = JSON.parse(res).collection;
+        const hits = json.metadata.total_hits;
+        const page =
+        this.setState({
+          data: json,
+          page: (obj.page ? obj.page : 1),
+          no_pages: Math.ceil(hits/100),
+        });
+      });
+  }
+
   handleSubmit(event) {
     event.preventDefault();
-    const start = parseInt(this.state.year_start);
-    const end = parseInt(this.state.year_end);
+    const start = parseInt(this.state.form.year_start);
+    const end = parseInt(this.state.form.year_end);
 
-    if(start <= end && end <= new Date().getFullYear()) {   // form validation
-      const { data, isVisible, ...form } = this.state;
-      fetch("/handleForm", {
-        method: "POST",
-        headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(form)
-      })
-        .then(res => res.json())
-        .then(res => this.setState({ data: JSON.parse(res).collection }));
+    if(start <= end && end <= new Date().getFullYear()) {
+      this.updateData();
     } else {
       alert("Make sure the years are valid!");
+    }
+  }
+
+  handlePrevPage(event) {
+    var obj = JSON.parse(JSON.stringify(this.state.form));
+    if(this.state.page > 1) {
+      obj["page"] = this.state.page - 1;
+      this.updateData(obj);
+    }
+  }
+
+  handleNextPage(event) {
+    const totalPages = Math.ceil(this.state.no_items/100);
+    var obj = JSON.parse(JSON.stringify(this.state.form));
+    if(this.state.page < this.state.no_pages) {
+      obj["page"] = this.state.page + 1;
+      this.updateData(obj);
     }
   }
 
@@ -66,6 +116,8 @@ class App extends Component {
   }
 
   render() {
+    var loggedIn = localStorage.loggedIn ? localStorage.loggedIn : false;
+    //var button = loggedIn ? <LogInBtn /> : <SignedInBtn />;
     return (
       <div className="App">
       <div id="top">
@@ -88,15 +140,15 @@ class App extends Component {
           <section id="basic">
             <div>
               <label>Search terms:</label>
-              <input type="text" onChange={this.handleChange} size="18" />
+              <input name="q" type="text" value={this.state.form.q} onChange={this.handleChange} size="18" />
             </div>
             <div>
               <label><font color="red">*</font>Start year:</label>
-              <input type="number" value={this.state.year_start} onChange={this.handleChange} required />
+              <input name="year_start" type="number" value={this.state.form.year_start} onChange={this.handleChange} required />
             </div>
             <div>
               <label><font color="red">*</font>End year:</label>
-              <input type="number" value={this.state.year_end} onChange={this.handleChange} required />
+              <input name="year_end" type="number" value={this.state.form.year_end} onChange={this.handleChange} required />
             </div>
           </section>
 
@@ -112,27 +164,27 @@ class App extends Component {
                 <section id="advanced">
                   <div>
                     <label>Image title:</label><br />
-                    <input type="text" onChange={this.handleChange} size="15" />
+                    <input name="title" type="text" value={this.state.form.title} onChange={this.handleChange} size="15" />
                   </div>
                   <div>
                     <label>Image location:</label><br />
-                    <input type="text" onChange={this.handleChange} size="15" />
+                    <input name="location" type="text" value={this.state.form.location} onChange={this.handleChange} size="15" />
                   </div>
                   <div>
                     <label>Center:</label><br />
-                    <input type="text" onChange={this.handleChange} size="15" />
+                    <input name="center" type="text" value={this.state.form.center} onChange={this.handleChange} size="15" />
                   </div>
                   <div>
                     <label>NASA ID:</label><br />
-                    <input type="text" onChange={this.handleChange} size="15" />
+                    <input name="nasa_id" type="text" value={this.state.form.nasa_id} onChange={this.handleChange} size="15" />
                   </div>
                   <div>
                     <label>Primary photographer:</label><br />
-                    <input type="text" onChange={this.handleChange} size="15" />
+                    <input name="photographer" type="text" value={this.state.form.photographer} onChange={this.handleChange} size="15" />
                   </div>
                   <div>
                     <label>Secondary photographer:</label><br />
-                    <input type="text" onChange={this.handleChange} size="15" />
+                    <input name="secondary_creator" type="text" value={this.state.form.secondary_creator} onChange={this.handleChange} size="15" />
                   </div>
                 </section>
               }
@@ -141,8 +193,22 @@ class App extends Component {
           <input type="submit" className="anim_pulse" />
         </form>
       </div>
-      <div>
-        <TileGrid data={this.state.data} />
+      <div className="results" ref={this.myRef}>
+        {this.state.no_pages >= 0 &&
+          <div>
+            <h4 id="showing">Showing page {this.state.page} of {this.state.no_pages}</h4>
+            <div className="buttons">
+              <button onClick={this.handlePrevPage}>&lt;</button>
+              <button onClick={this.handleNextPage}>&gt;</button>
+            </div>
+            <TileGrid data={this.state.data} />
+            <h4 id="showing">Showing page {this.state.page} of {this.state.no_pages}</h4>
+            <div className="buttons">
+              <button onClick={this.handlePrevPage}>&lt;</button>
+              <button onClick={this.handleNextPage}>&gt;</button>
+            </div>
+          </div>
+        }
       </div>
       </div>
     );

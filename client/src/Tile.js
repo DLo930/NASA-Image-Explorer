@@ -7,9 +7,8 @@ class Tile extends Component {
     const data = item.data[0];
     return (
       <div className="grid-item">
-        <h2>{data.title}</h2>
+        <h4>{data.title}</h4>
         <img src={item.links[0].href} alt="preview" />
-        <p>{data.description}</p>
       </div>
     );
   }

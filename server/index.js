@@ -4,6 +4,17 @@ const querystring = require("querystring");
 const request = require("request");
 const bodyParser = require("body-parser");
 
+//copied from "Connected to nasa-db" -- EDIT?
+const MongoClient = require('mongodb').MongoClient;
+const uri = "mongodb+srv://user-1:<SlALzKJlkc6R5c0K>@nasa-db-rsces.mongodb.net/test?retryWrites=true";
+const client = new MongoClient(uri, { useNewUrlParser: true });
+client.connect(err => {
+  const collection = client.db("test").collection("devices");
+  // perform actions on the collection object
+  client.close();
+});
+
+
 app.use(express.json());
 
 app.post("/handleForm", (req, res) => {

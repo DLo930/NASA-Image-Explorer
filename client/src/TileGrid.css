@@ -1,8 +1,9 @@
 .grid-container {
   border: 2px solid #cccccc;
   display: grid;
-  grid-template-columns: auto auto auto auto;
+  grid-template-columns: auto auto auto auto auto;
   grid-gap: 10px;
-  border-radius: 15px;
-  padding: 1%;
+  justify-content: space-evenly;
+  border-radius: 25px;
+  padding: 1.5vh 5vw;
 }

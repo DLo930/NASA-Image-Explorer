@@ -1,2 +1,2 @@
 ## NASA Image Explorer
-A web app that searches NASA's collection of images
+A full-stack (MERN) web app that searches NASA's collection of images
