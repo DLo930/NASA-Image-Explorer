@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Popup from 'reactjs-popup';
+import ShareComponent from './ShareComponent';
 import './Tile.css';
 
 class Tile extends Component {
@@ -11,7 +12,7 @@ class Tile extends Component {
     fetch(this.props.item.href)
       .then(res => res.json())
       .then(res => {
-        this.setState({ url: res[0] });
+        this.setState({ url_med: res[2], url_orig: res[0] });
       });
   }
 
@@ -25,14 +26,22 @@ class Tile extends Component {
       </div>
     );
     return (
-      <Popup trigger={trigger} modal>
-        <div>
-          <h3>{data.title}</h3>
-          <img src={this.state.url} />
-          <h4 className="small_text">NASA ID: {data.nasa_id}</h4>
-          <h4 className="small_text">Center: {data.center}</h4>
-          <br />
-          <p>{data.description}</p>
+      <Popup className="popup" trigger={trigger} modal>
+        <div className="modal">
+          <h3 className="center">{data.title}</h3>
+          <div className="row">
+            <div className="column left">
+              <img src={this.state.url_med} />
+              <h4 className="label small_text">NASA ID: {data.nasa_id}</h4>
+              <h4 className="label small_text">Center: {data.center}</h4>
+            </div>
+            <div className="column">
+              <p>{data.description}</p>
+            </div>
+          </div>
+          <div className="share">
+            <ShareComponent url_orig={this.state.url_orig}/>
+          </div>
         </div>
       </Popup>
     );

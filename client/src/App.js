@@ -70,7 +70,7 @@ class App extends Component {
     })
       .then(res => res.json())
       .then(res => {
-        const json = res.collection;
+        const json = JSON.parse(res).collection;
         const hits = json.metadata.total_hits;
         this.setState({
           data: json,

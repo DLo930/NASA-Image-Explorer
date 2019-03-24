@@ -1,7 +1,7 @@
 .grid-item {
   height: 25vh;
   width: 35vh;
-  background-color: #aaaaaa;
+  background-color: #999999;
   border: 2px solid #cccccc;
   border-radius: 25px;
   padding: 0px 10px 10px 10px;
@@ -16,12 +16,68 @@
   transition: background-color .35s;
   cursor: pointer;
 }
-.grid-item h4 {
+.grid-item > h4 {
   text-align: center;
+  display: block;
+  width: 100%;
 }
-.grid-item img {
+.grid-item > img {
   display: block;
   height: 15vh;
   width: auto;
+  border: 2px solid #cccccc;
+  border-radius: 1.5vh;
   margin: auto;
+}
+
+.modal {
+  color: white;
+  background-color: black;
+  border: 3px solid #cccccc;
+  border-radius: 25px;
+  width: 1000px;
+  display: block;
+  margin: -10%;
+}
+.modal > .center {
+  display: block;
+  align-content: center;
+}
+.row {
+  display: flex;
+  height: 55vh;
+}
+.column {
+  width: 40vw;
+}
+.column > .label {
+  display: block;
+  margin: 1.5vh 1.5vw 1vh 1.5vw;
+}
+.column.left {
+  border-right: 1px solid #cccccc;
+  height: 92%;
+  right: 50%;
+}
+.column > img {
+  display: block;
+  max-height: 40vh;
+  max-width: 29vw;
+  width: auto;
+  border: 3px solid #cccccc;
+  border-radius: 15px;
+  margin: auto;
+  margin-top: 1vh;
+}
+.column > p {
+  margin-left: 4%;
+  margin-right: 4%;
+}
+.share {
+  display: block;
+  width: 50%;
+  text-align: center;
+  margin: auto;
+  margin-bottom: 3%;
+  border: 3px solid #cccccc;
 }
