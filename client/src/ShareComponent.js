@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { css } from 'emotion';
 import { FaTwitter, FaFacebook, FaLinkedin, FaPinterest } from 'react-icons/fa';
 import { ShareButtonRectangle, ShareBlockStandard } from 'react-custom-share';
 

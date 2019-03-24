@@ -39,9 +39,11 @@
   display: block;
   margin: -10%;
 }
-.modal > .center {
+.modal > .title {
   display: block;
   align-content: center;
+  margin-left: 3%;
+  margin-right: 3%;
 }
 .row {
   display: flex;

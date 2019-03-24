@@ -8,12 +8,21 @@ class Tile extends Component {
     super(props);
     this.state = {};
 
-    // Set url upon initialization
     fetch(this.props.item.href)
       .then(res => res.json())
       .then(res => {
         this.setState({ url_med: res[2], url_orig: res[0] });
       });
+  }
+
+  componentDidUpdate(prevProps) {
+    if(JSON.stringify(this.props.item) !== JSON.stringify(prevProps.item)) {
+      fetch(this.props.item.href)
+        .then(res => res.json())
+        .then(res => {
+          this.setState({ url_med: res[2], url_orig: res[0] });
+        });
+    }
   }
 
   render() {
@@ -28,10 +37,10 @@ class Tile extends Component {
     return (
       <Popup className="popup" trigger={trigger} modal>
         <div className="modal">
-          <h3 className="center">{data.title}</h3>
+          <h3 className="title">{data.title}</h3>
           <div className="row">
             <div className="column left">
-              <img src={this.state.url_med} />
+              <img src={this.state.url_med} alt="" />
               <h4 className="label small_text">NASA ID: {data.nasa_id}</h4>
               <h4 className="label small_text">Center: {data.center}</h4>
             </div>

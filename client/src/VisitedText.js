@@ -16,7 +16,13 @@ class VisitedText extends Component {
   }
 
   render() {
-    return <div className="visitedtext small_text">{this.state.text}</div>;
+    return (
+      <div className="visitedtext">
+        <h5 className="small_text">
+          {this.state.text}
+        </h5>
+      </div>
+    );
   }
 }
 
