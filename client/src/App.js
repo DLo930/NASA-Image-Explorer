@@ -42,7 +42,6 @@ class App extends Component {
     this.handlePrevPage = this.handlePrevPage.bind(this);
     this.handleNextPage = this.handleNextPage.bind(this);
     this.toggleAdvanced = this.toggleAdvanced.bind(this);
-    this.myRef = React.createRef();
   }
 
   handleChange(event) {
@@ -71,9 +70,8 @@ class App extends Component {
     })
       .then(res => res.json())
       .then(res => {
-        const json = JSON.parse(res).collection;
+        const json = res.collection;
         const hits = json.metadata.total_hits;
-        const page =
         this.setState({
           data: json,
           page: (obj.page ? obj.page : 1),
@@ -193,7 +191,7 @@ class App extends Component {
           <input type="submit" className="anim_pulse" />
         </form>
       </div>
-      <div className="results" ref={this.myRef}>
+      <div className="results">
         {this.state.no_pages >= 0 &&
           <div>
             <h4 id="showing">Showing page {this.state.page} of {this.state.no_pages}</h4>
