@@ -83,6 +83,8 @@ class App extends Component {
               loggedIn: true,
               profile: res
             });
+          } else {
+            alert("Password incorrect.");
           }
         });
     }
@@ -103,8 +105,25 @@ class App extends Component {
   }
 
   // To be passed to Tile
-  toggleFavorite(event) {
+  toggleFavorite(id) {
+    var copy = Object.assign({}, this.state.profile.favorites);
+    if(id in this.state.profile.favorites) delete copy[id];
+    else copy[id] = true;  // true is just a placeholder for the value
 
+    this.setState({
+      profile: {
+        email: this.state.profile.email,
+        password: this.state.profile.password,
+        favorites: copy
+      }
+    });
+    fetch("/save", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(this.state.profile)
+    });
   }
 
   updateData(obj=this.state.form) {
@@ -187,7 +206,7 @@ class App extends Component {
             Library
           </h2>
           {this.state.loggedIn ? loggedIn : login};
-          <VisitedText />
+          <VisitedText loggedIn={this.state.loggedIn} />
           <span id="heading">
             <h1>NASA Image Explorer</h1>
             <h3>Explore NASA's extensive collection of featured images!</h3>
@@ -259,7 +278,12 @@ class App extends Component {
               <button onClick={this.handlePrevPage}>&lt;</button>
               <button onClick={this.handleNextPage}>&gt;</button>
             </div>
-            <TileGrid data={this.state.data} />
+            <TileGrid
+              loggedIn={this.state.loggedIn}
+              data={this.state.data}
+              favorites={this.state.profile.favorites}
+              toggleFavorite={this.toggleFavorite}
+            />
             <h4 id="showing">Showing page {this.state.page} of {this.state.no_pages}</h4>
             <div className="buttons">
               <button onClick={this.handlePrevPage}>&lt;</button>

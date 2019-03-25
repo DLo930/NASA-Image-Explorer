@@ -17,6 +17,7 @@ var db = mongoose.connection;
 db.once("open", () => console.log("Connected to DB."));
 db.on("error", console.error.bind(console, "Connection error:"));
 
+
 app.post("/handleLogin", (req, res) => {
   const query = User.where({
     email: req.body.email
@@ -33,7 +34,8 @@ app.post("/handleLogin", (req, res) => {
     } else {
       var newUser = new User({
         email: req.body.email,
-        password: req.body.password
+        password: req.body.password,
+        favorites: {}
       });
       newUser.save(err => {
         if(err) {
@@ -44,6 +46,13 @@ app.post("/handleLogin", (req, res) => {
       });
     }
   });
+});
+
+app.post("/save", (req, res) => {
+  User.updateOne(
+    { email: req.body.email },
+    { favorites: req.body.favorites }
+  );
 });
 
 app.post("/handleForm", (req, res) => {

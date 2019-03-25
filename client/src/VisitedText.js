@@ -9,10 +9,10 @@ class VisitedText extends Component {
       "It's your first time here. Welcome!" :
       (timesVisited === 1) ?
         "You've visited once before. Welcome back!" :
-        `You've visited ${timesVisited} times before. Welcome back!`;
+        `You've visited ${timesVisited} times before.`;
+    if(!this.props.loggedIn) res += " Welcome back!";
     this.state = { text: res };
-    timesVisited++;
-    localStorage.timesVisited = timesVisited;
+    localStorage.timesVisited++;
   }
 
   render() {

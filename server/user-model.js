@@ -7,9 +7,7 @@ const saltRounds = 10;
 var UserSchema = new Schema({
   email:      { type: String, required: true, unique: true },
   password:   { type: String, required: true },
-  first:      { type: String },
-  last:       { type: String },
-  favorites:  { type: Schema.Types.Mixed }
+  favorites:  { type: Map, of: Boolean }
 });
 // Add password hashing middleware
 UserSchema.pre("save", function(next) {

@@ -11,8 +11,15 @@ class Tile extends Component {
     fetch(this.props.item.href)
       .then(res => res.json())
       .then(res => {
-        this.setState({ url_med: res[2], url_orig: res[0] });
+        const id = this.props.item.data[0].nasa_id;
+        this.setState({
+          favorited: (id in this.props.favorites),
+          url_med: res[2],
+          url_orig: res[0]
+        });
       });
+
+    this.handleFavorite = this.handleFavorite.bind(this);
   }
 
   componentDidUpdate(prevProps) {
@@ -25,11 +32,19 @@ class Tile extends Component {
     }
   }
 
+  handleFavorite() {
+    if(this.props.loggedIn) {
+      this.setState({ favorited: !this.state.favorited });
+      this.props.toggleFavorite(this.props.item.nasa_id);
+    }
+  }
+
   render() {
     const item = this.props.item;
     const data = item.data[0];
+    const fav = this.state.favorited ? "grid-item fav" : "grid-item";
     const trigger = (
-      <div className="grid-item">
+      <div className={fav}>
         <h4>{data.title}</h4>
         <img src={item.links[0].href} alt="preview" />
       </div>
@@ -46,6 +61,9 @@ class Tile extends Component {
             </div>
             <div className="column">
               <p>{data.description}</p>
+              {this.props.loggedIn &&
+                <button className="fav" onClick={this.handleFavorite}>Favorite</button>
+              }
             </div>
           </div>
           <div className="share">

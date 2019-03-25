@@ -16,6 +16,13 @@
   transition: background-color .35s;
   cursor: pointer;
 }
+.grid-item.fav {
+  color: #FFD700;
+  border-color: #FFD700;
+}
+.grid-item.fav:hover {
+  border-color: #FFD700;
+}
 .grid-item > h4 {
   text-align: center;
   display: block;
@@ -74,6 +81,9 @@
 .column > p {
   margin-left: 4%;
   margin-right: 4%;
+}
+.column.fav {
+  float: right;
 }
 .share {
   display: block;
