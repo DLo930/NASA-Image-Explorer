@@ -17,7 +17,7 @@ var db = mongoose.connection;
 db.once("open", () => console.log("Connected to DB."));
 db.on("error", console.error.bind(console, "Connection error:"));
 
-
+// Handle user login
 app.post("/handleLogin", (req, res) => {
   const query = User.where({
     email: req.body.email
@@ -48,13 +48,18 @@ app.post("/handleLogin", (req, res) => {
   });
 });
 
+// Update favorites
 app.post("/save", (req, res) => {
-  User.updateOne(
+  User.findOneAndUpdate(
     { email: req.body.email },
-    { favorites: req.body.favorites }
+    { favorites: req.body.favorites },
+    (err, doc) => {
+      if(err) console.log("Save error");
+    }
   );
 });
 
+// Handle search query
 app.post("/handleForm", (req, res) => {
   var obj = req.body;
   obj["media_type"] = "image";

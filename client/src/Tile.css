@@ -16,13 +16,6 @@
   transition: background-color .35s;
   cursor: pointer;
 }
-.grid-item.fav {
-  color: #FFD700;
-  border-color: #FFD700;
-}
-.grid-item.fav:hover {
-  border-color: #FFD700;
-}
 .grid-item > h4 {
   text-align: center;
   display: block;
@@ -35,6 +28,33 @@
   border: 2px solid #cccccc;
   border-radius: 1.5vh;
   margin: auto;
+}
+.grid-item.fav {
+  color: #FFD700;
+  border-color: #FFD700;
+}
+.grid-item.fav:hover {
+  border-color: #FFD700;
+}
+.grid-item.fav > img {
+  border-color: #FFD700;
+}
+.favBtn {
+  display: block;
+  float: right;
+  font-family: "Titillium Web", sans-serif;
+  font-size: 14px;
+  background-color: black;
+  color: #eeeeee;
+  padding: 0px 7px;
+  border: 2px solid #eeeeee;
+  border-radius: 10px;
+  margin-right: 1vw;
+  cursor: pointer;
+}
+.favBtn.fav {
+  color: #FFD700;
+  border-color: #FFD700;
 }
 
 .modal {

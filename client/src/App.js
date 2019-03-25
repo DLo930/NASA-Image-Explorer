@@ -76,7 +76,7 @@ class App extends Component {
       })
         .then(res => res.json())
         .then(res => {
-          if(Object.entries(res).length !== 0) {
+          if(Object.entries(res).length !== 0) {  // empty Object
             sessionStorage.setItem("loggedIn", true);
             sessionStorage.setItem("email", this.state.profile.email);
             this.setState({
@@ -106,17 +106,12 @@ class App extends Component {
 
   // To be passed to Tile
   toggleFavorite(id) {
-    var copy = Object.assign({}, this.state.profile.favorites);
-    if(id in this.state.profile.favorites) delete copy[id];
-    else copy[id] = true;  // true is just a placeholder for the value
+    var profile = {...this.state.profile};
+    if(id in profile.favorites) delete profile.favorites[id];
+    else profile.favorites[id] = "";  // "" is just a placeholder for the value
+    this.setState({ profile });
 
-    this.setState({
-      profile: {
-        email: this.state.profile.email,
-        password: this.state.profile.password,
-        favorites: copy
-      }
-    });
+    console.log(JSON.stringify(this.state.profile));
     fetch("/save", {
       method: "POST",
       headers: {

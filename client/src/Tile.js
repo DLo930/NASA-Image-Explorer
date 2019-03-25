@@ -27,7 +27,12 @@ class Tile extends Component {
       fetch(this.props.item.href)
         .then(res => res.json())
         .then(res => {
-          this.setState({ url_med: res[2], url_orig: res[0] });
+          const id = this.props.item.data[0].nasa_id;
+          this.setState({
+            favorited: (id in this.props.favorites),
+            url_med: res[2],
+            url_orig: res[0]
+          });
         });
     }
   }
@@ -35,7 +40,7 @@ class Tile extends Component {
   handleFavorite() {
     if(this.props.loggedIn) {
       this.setState({ favorited: !this.state.favorited });
-      this.props.toggleFavorite(this.props.item.nasa_id);
+      this.props.toggleFavorite(this.props.item.data[0].nasa_id);
     }
   }
 
@@ -43,6 +48,7 @@ class Tile extends Component {
     const item = this.props.item;
     const data = item.data[0];
     const fav = this.state.favorited ? "grid-item fav" : "grid-item";
+    const favBtn = "anim_pulse favBtn" + (this.state.favorited ? " fav" : "");
     const trigger = (
       <div className={fav}>
         <h4>{data.title}</h4>
@@ -62,7 +68,7 @@ class Tile extends Component {
             <div className="column">
               <p>{data.description}</p>
               {this.props.loggedIn &&
-                <button className="fav" onClick={this.handleFavorite}>Favorite</button>
+                <button className={favBtn} onClick={this.handleFavorite}>Favorite</button>
               }
             </div>
           </div>

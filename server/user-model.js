@@ -7,9 +7,10 @@ const saltRounds = 10;
 var UserSchema = new Schema({
   email:      { type: String, required: true, unique: true },
   password:   { type: String, required: true },
-  favorites:  { type: Map, of: Boolean }
+  favorites:  { type: Map, of: String }
 });
-// Add password hashing middleware
+
+// Add BCrypt password hashing middleware
 UserSchema.pre("save", function(next) {
   var user = this;
   if(!user.isModified("password")) return next();
@@ -22,6 +23,8 @@ UserSchema.pre("save", function(next) {
     });
   });
 });
+
+// Check if password is correct
 UserSchema.methods.comparePassword = function(candidatePassword) {
   return bcrypt.compareSync(candidatePassword, this.password);
 };
