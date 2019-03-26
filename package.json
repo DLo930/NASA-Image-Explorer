@@ -2,13 +2,19 @@
   "name": "nasaimageexplorer1",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "start": "concurrently \"cd server && node index.js\" \"cd client && npm start\""
+    "start": "concurrently \"node server.js\" \"cd client && npm start\""
   },
   "author": "Dennis Lo",
   "license": "ISC",
   "dependencies": {
-    "concurrently": "^4.1.0"
+    "bcrypt": "^3.0.5",
+    "body-parser": "^1.18.3",
+    "concurrently": "^4.1.0",
+    "express": "^4.16.4",
+    "mongoose": "^5.4.19",
+    "path": "^0.12.7",
+    "querystring": "^0.2.0",
+    "request": "^2.88.0"
   }
 }
