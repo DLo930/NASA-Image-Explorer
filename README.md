@@ -1,4 +1,4 @@
-## NASA Image Explorer
+# NASA Image Explorer
 ### Overview
 NASA Image Explorer is a web app that features a search bar, with the three basic search fields of Keywords, Start Year, and End Year. More specific queries can be handled by simply clicking the “Advanced search” button, which toggles the visibility of the advanced search fields. Upon form submission, results appear in a grid format and the user can click on a tile to bring up a popup box that displays the image’s metadata. Additionally, the user can share the original image via a few social media buttons. Last but certainly not least, the app features login functionality. There isn’t a registration box, but a new user can register simply by entering a unique email and password. Existing users login by entering their email and correct password. Logging in allows the user to add results to their Favorites (the button shows up in the popup box). 
 
@@ -10,3 +10,9 @@ A major limitation to my progress on the web app was my lack of experience in we
 
 ### Links
 A working build of this project can be found at http://nasa-image-explorer.appspot.com and the code repository is accessible at https://github.com/DLo930/NASA-Image-Explorer. 
+
+### Running code locally
+```
+$ git clone https://github.com/DLo930/NASA-Image-Explorer.git
+$ npm start
+```
